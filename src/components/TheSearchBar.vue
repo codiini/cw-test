@@ -42,9 +42,11 @@ const handleSearch = () => {
   @include flex-container(row, start, center);
   padding: 10px 30px;
   border-radius: $base-radius;
-  width: 700px;
-  height: 60px;
+  width: 100%;
+  height: 70px;
   background-color: #fff;
+  color: $dark-blue;
+  transition: border-color 0.3s ease;
 
   svg {
     height: 20px;
@@ -52,12 +54,19 @@ const handleSearch = () => {
   }
 
   input {
+    font-size: 16px;
     outline: none;
     background: transparent;
     border: none;
     width: 100%;
     height: 100%;
     padding: 5px 15px;
+    &::placeholder {
+      color: $dark-blue;
+    }
+  }
+  &:focus-within {
+    outline: 1px solid $dark-blue;
   }
 }
 </style>

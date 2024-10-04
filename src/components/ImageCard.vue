@@ -1,6 +1,6 @@
 <template>
   <div class="image-card">
-    <img :src="image_preview_url" :alt="alt_description" />
+    <img :src="image_preview_url" :alt="alt_description" loading="eager" />
     <div class="overlay"></div>
     <div class="image-card__photo-details">
       <h3>{{ artist }}</h3>
