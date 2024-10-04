@@ -13,7 +13,3 @@
   left: $left;
   right: $right;
 }
-
-@mixin grid-row($start, $end) {
-  grid-row: #{$start} / #{$end};
-}

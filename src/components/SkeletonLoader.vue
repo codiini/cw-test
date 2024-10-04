@@ -1,6 +1,11 @@
 <template>
   <div class="skeleton-grid">
-    <div v-for="i in 9" :key="i" :class="`skeleton-item item-${i}`">
+    <div
+      v-for="i in 8"
+      :key="i"
+      :class="`skeleton-item item-${i}`"
+      :style="`grid-row-end: span ${rowSize()}`"
+    >
       <div class="skeleton-image"></div>
       <div class="skeleton-text">
         <div class="skeleton-line"></div>
@@ -23,26 +28,26 @@
 .skeleton-item {
   @include flex-container(column, auto, auto);
   height: 100%;
-  width: 360px;
+  width: 300px;
   border-radius: $base-radius;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #f5f5f5;
 }
 
 .skeleton-image {
   min-height: 250px;
   height: 80%;
-  background-color: #e0e0e0;
+  background-color: #f5f5f5;
 }
 
 .skeleton-text {
-  padding: 10px;
+  padding: 20px;
   margin-top: auto;
 }
 
 .skeleton-line {
-  height: 20px;
-  background-color: #e0e0e0;
+  height: 15px;
   margin-bottom: 10px;
 }
 
@@ -79,16 +84,15 @@
   }
 }
 
-.skeleton-image,
 .skeleton-line {
-  background-image: linear-gradient(to right, #f0f0f0 0%, #e0e0e0 20%, #f0f0f0 40%, #f0f0f0 100%);
+  background-image: linear-gradient(to right, #e0e0e0 0%, #d0d0d0 20%, #e0e0e0 40%, #e0e0e0 100%);
   background-size: 800px 104px;
   animation: shimmer 1.5s infinite linear;
 }
-
-@each $item, $row in $grid-rows {
-  .item-#{$item} {
-    @include grid-row(nth($row, 1), nth($row, 2));
-  }
-}
 </style>
+
+<script setup lang="ts">
+const rowSize = () => {
+  return Math.ceil(Math.random() * 3) + 3
+}
+</script>

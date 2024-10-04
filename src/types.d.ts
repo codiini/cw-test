@@ -5,4 +5,5 @@ export type Image = {
   artist: string
   photo_location: string
   alt_description: string
+  row_span: number
 }

@@ -13,7 +13,7 @@
 import { defineProps } from 'vue'
 import type { Image } from '../types'
 
-type ImageProps = Omit<Image, 'image_regular_url'>
+type ImageProps = Omit<Image, 'image_regular_url | row_span'>
 
 defineProps<ImageProps>()
 </script>
@@ -24,6 +24,7 @@ defineProps<ImageProps>()
   border-radius: $base-radius;
   overflow: hidden;
   cursor: pointer;
+  width: 300px;
   &:hover {
     img {
       transform: scale(1.1);

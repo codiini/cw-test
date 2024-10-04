@@ -6,6 +6,7 @@
       :class="`image-${index}`"
       :key="image.id"
       v-bind="image"
+      :style="`grid-row-end: span ${image.row_span}`"
     ></ImageCard>
   </div>
 </template>
@@ -28,11 +29,5 @@ defineProps<{
   grid-template-columns: repeat(3, 1fr);
   gap: 40px 60px;
   @include position(relative, -75px);
-}
-
-@each $item, $row in $grid-rows {
-  .image-#{$item} {
-    @include grid-row(nth($row, 1), nth($row, 2));
-  }
 }
 </style>
