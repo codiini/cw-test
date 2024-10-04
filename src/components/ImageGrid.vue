@@ -26,8 +26,10 @@ defineProps<{
 <style scoped lang="scss">
 .image-card-list {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px 60px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-row-gap: 30px;
+  grid-column-gap: 40px;
+  column-gap: 40px;
   @include position(relative, -75px);
 }
 </style>

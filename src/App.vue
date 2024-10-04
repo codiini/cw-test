@@ -36,6 +36,7 @@ const loadImages = async (query?: string) => {
   isSearching.value = true
 
   try {
+    imageList.value = []
     imageList.value = await fetchImages(query)
   } catch (error) {
     console.error(error)
@@ -68,7 +69,7 @@ onMounted(async () => {
         <div
           v-if="!isSearchBarVisible && !isSearching"
           @click="closeSearch"
-          style="display: inline-block; color: black; width: 20px; height: 20px; cursor: pointer"
+          style="display: inline-block; color: #0a2e65; width: 20px; height: 20px; cursor: pointer"
         >
           <CloseCircle />
         </div>
@@ -80,8 +81,15 @@ onMounted(async () => {
   </header>
 
   <main>
-    <SkeletonLoader v-if="isSearching || !imageList.length" />
-    <ImageGrid :image-list="imageList" @open-modal="openModal($event)" />
+    <SkeletonLoader v-if="isSearching" />
+    <div v-if="!isSearching && !imageList.length" class="empty-state">
+      <p>No images found. Please try a different search.</p>
+    </div>
+    <ImageGrid
+      v-if="imageList.length && !isSearching"
+      :image-list="imageList"
+      @open-modal="openModal($event)"
+    />
   </main>
 
   <AppModal :isOpen="isModalOpen" @close="closeModal">
@@ -99,7 +107,7 @@ onMounted(async () => {
 header {
   height: 300px;
   width: 100%;
-  padding: 20px 0;
+  padding: 20px;
   background-color: $header-bg;
   .header-container {
     width: 100%;
@@ -136,13 +144,19 @@ main {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 60px;
-  @include flex-container(row, center, center, wrap);
+  .empty-state {
+    font-size: 24px;
+    color: $dark-blue;
+    text-align: center;
+    margin: 40px 0;
+    font-weight: 600;
+  }
 }
 
 .modal-content {
   height: 100%;
   &__details {
-    padding: 40px 50px;
+    padding: 20px 50px;
     h2 {
       font-weight: 800;
     }

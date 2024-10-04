@@ -13,7 +13,8 @@ const useImage = () => {
       image_regular_url: image.urls.regular,
       alt_description: image.alt_description,
       artist: image.user.name,
-      photo_location: image.user.location ?? 'Lagos, Nigeria'
+      photo_location: image.user.location ?? 'N/A',
+      row_span: Math.ceil(Math.random() * 3) + 3
     }))
   }
 

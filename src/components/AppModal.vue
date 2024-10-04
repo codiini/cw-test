@@ -56,6 +56,7 @@ const closeModal = () => {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
+  padding: 40px;
 }
 
 .modal-content {
@@ -67,7 +68,7 @@ const closeModal = () => {
   @include position(relative);
 
   .modal-close {
-    @include position(absolute, -40px, -40px);
+    @include position(absolute, -5%, -40px);
     background: none;
     outline: none;
     border: none;

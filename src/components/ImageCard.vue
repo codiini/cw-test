@@ -24,7 +24,8 @@ defineProps<ImageProps>()
   border-radius: $base-radius;
   overflow: hidden;
   cursor: pointer;
-  width: 300px;
+  width: 100%;
+  min-width: 300px;
   &:hover {
     img {
       transform: scale(1.1);
