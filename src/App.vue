@@ -84,26 +84,18 @@ onMounted(async () => {
     <ImageGrid :image-list="imageList" @open-modal="openModal($event)" />
   </main>
 
-  <transition name="slide">
-    <AppModal :isOpen="isModalOpen" @close="closeModal">
-      <div class="modal-content">
-        <img :src="modalData?.image_regular_url" />
-        <div class="modal-content__details">
-          <h1>{{ modalData?.artist }}</h1>
-          <p>{{ modalData?.photo_location }}</p>
-        </div>
+  <AppModal :isOpen="isModalOpen" @close="closeModal">
+    <div class="modal-content">
+      <img :src="modalData?.image_regular_url" />
+      <div class="modal-content__details">
+        <h2>{{ modalData?.artist }}</h2>
+        <p>{{ modalData?.photo_location }}</p>
       </div>
-    </AppModal>
-  </transition>
+    </div>
+  </AppModal>
 </template>
 
 <style scoped lang="scss">
-main {
-  max-width: 1200px;
-  margin: 0 auto;
-  @include flex-container(row, center, center, wrap);
-}
-
 header {
   height: 300px;
   width: 100%;
@@ -111,7 +103,7 @@ header {
   background-color: $header-bg;
   .header-container {
     width: 100%;
-    max-width: 900px;
+    max-width: 1200px;
     margin: 0 auto;
     padding-top: 70px;
   }
@@ -121,14 +113,14 @@ header {
     @include flex-container(row, start, baseline);
 
     p {
-      font-size: 32px;
+      font-size: 38px;
       font-weight: bold;
-      color: #0a2e65;
+      color: $dark-blue;
       margin-bottom: 30px;
       text-align: left;
       padding-left: 20px;
       span {
-        color: rgba(10, 46, 101, 0.6);
+        color: $gray-blue;
       }
     }
   }
@@ -140,9 +132,20 @@ header {
   }
 }
 
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 60px;
+  @include flex-container(row, center, center, wrap);
+}
+
 .modal-content {
+  height: 100%;
   &__details {
-    padding: 20px 50px;
+    padding: 40px 50px;
+    h2 {
+      font-weight: 800;
+    }
   }
 
   img {

@@ -1,22 +1,24 @@
 <template>
   <Teleport to="body">
-    <div v-if="isOpen" class="modal-overlay" @click="closeModal">
-      <div class="modal-content" @click.stop>
-        <button class="modal-close" @click="closeModal">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="size-6"
-          >
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-          </svg>
-        </button>
-        <slot></slot>
+    <transition name="fade" mode="out-in">
+      <div v-if="isOpen" class="modal-overlay" @click="closeModal">
+        <div class="modal-content" @click.stop>
+          <button class="modal-close" @click="closeModal">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-6"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+          </button>
+          <slot></slot>
+        </div>
       </div>
-    </div>
+    </transition>
   </Teleport>
 </template>
 
@@ -38,6 +40,15 @@ const closeModal = () => {
 </script>
 
 <style scoped lang="scss">
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
 .modal-overlay {
   @include position(fixed, 0, auto, auto, 0);
   @include flex-container();
