@@ -28,7 +28,7 @@ const useImage = () => {
     canvas.height = containerHeight
 
     const pixels = decode(hash ?? 'LnL;NtIW.8ad_NWBRjofgOt6IUa$', containerWidth, containerHeight)
-    const ctx = canvas.getContext('2d')
+    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
     const imageData = ctx.createImageData(containerWidth, containerHeight)
     imageData.data.set(pixels)
     ctx.putImageData(imageData, 0, 0)
