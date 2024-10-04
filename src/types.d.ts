@@ -6,4 +6,5 @@ export type Image = {
   photo_location: string
   alt_description: string
   row_span: number
+  blur_hash: string
 }

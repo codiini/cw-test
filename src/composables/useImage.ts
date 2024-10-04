@@ -14,7 +14,8 @@ const useImage = () => {
       alt_description: image.alt_description,
       artist: image.user.name,
       photo_location: image.user.location ?? 'N/A',
-      row_span: Math.ceil(Math.random() * 3) + 3
+      row_span: Math.ceil(Math.random() * 3) + 3,
+      blur_hash: image.blur_hash
     }))
   }
 

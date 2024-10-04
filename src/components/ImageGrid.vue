@@ -27,9 +27,8 @@ defineProps<{
 .image-card-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-row-gap: 30px;
-  grid-column-gap: 40px;
-  column-gap: 40px;
+  grid-row-gap: 50px;
+  column-gap: 30px;
   @include position(relative, -75px);
 }
 </style>

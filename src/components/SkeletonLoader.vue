@@ -18,17 +18,20 @@
 <style scoped lang="scss">
 .skeleton-grid {
   display: grid;
-  place-content: center;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px 60px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-row-gap: 50px;
+  column-gap: 30px;
+  @include position(relative, -75px);
   position: relative;
   top: -75px;
 }
 
 .skeleton-item {
   @include flex-container(column, auto, auto);
+  min-height: 500px;
   height: 100%;
-  width: 300px;
+  width: 100%;
+  min-width: 300px;
   border-radius: $base-radius;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);

@@ -46,9 +46,9 @@ const loadImages = async (query?: string) => {
 }
 
 const closeSearch = async () => {
+  isSearchBarVisible.value = true
   searchQuery.value = ''
   await loadImages()
-  isSearchBarVisible.value = true
 }
 
 onMounted(async () => {
