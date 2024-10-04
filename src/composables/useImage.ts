@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { decode } from 'blurhash'
 
 const { VITE_UNSPLASH_API_URL, VITE_UNSPLASH_ACCESS_KEY } = import.meta.env
 const useImage = () => {
@@ -9,7 +10,7 @@ const useImage = () => {
 
     return result.data.map((image: any) => ({
       id: image.id,
-      image_preview_url: image.urls.small_s3,
+      image_preview_url: image.urls.small,
       image_regular_url: image.urls.regular,
       alt_description: image.alt_description,
       artist: image.user.name,
@@ -19,8 +20,23 @@ const useImage = () => {
     }))
   }
 
+  const setBlurHash = (canvas: HTMLCanvasElement, hash: string, hashContainer: HTMLDivElement) => {
+    const containerWidth = hashContainer.offsetWidth
+    const containerHeight = hashContainer.offsetHeight
+
+    canvas.width = containerWidth
+    canvas.height = containerHeight
+
+    const pixels = decode(hash ?? 'LnL;NtIW.8ad_NWBRjofgOt6IUa$', containerWidth, containerHeight)
+    const ctx = canvas.getContext('2d')
+    const imageData = ctx.createImageData(containerWidth, containerHeight)
+    imageData.data.set(pixels)
+    ctx.putImageData(imageData, 0, 0)
+  }
+
   return {
-    fetchImages
+    fetchImages,
+    setBlurHash
   }
 }
 

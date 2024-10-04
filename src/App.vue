@@ -1,3 +1,57 @@
+<template>
+  <header>
+    <div class="header-container">
+      <div class="search-texts-container">
+        <p v-if="isSearching && searchQuery">
+          Searching for <span>"{{ `${searchQuery}` }}"</span>
+        </p>
+        <p v-else-if="!isSearching && searchQuery">
+          Search Results for <span>"{{ `${searchQuery}` }}"</span>
+        </p>
+        <div
+          v-if="!isSearchBarVisible && !isSearching"
+          @click="closeSearch"
+          style="
+            display: inline-block;
+            color: #0a2e65;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            margin-left: 20px;
+          "
+        >
+          <XMark />
+        </div>
+      </div>
+      <div class="search-bar-container">
+        <TheSearchBar v-if="isSearchBarVisible" @search="loadImages($event)" />
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <SkeletonLoader v-if="isSearching" />
+    <div v-if="!isSearching && !imageList.length" class="empty-state">
+      <p>No images found. Please try a different search.</p>
+    </div>
+    <ImageGrid
+      v-if="imageList.length && !isSearching"
+      :image-list="imageList"
+      @open-modal="openModal($event)"
+    />
+  </main>
+
+  <AppModal :isOpen="isModalOpen" @close="closeModal">
+    <div class="modal-content">
+      <img :src="modalData?.image_regular_url" :alt="modalData?.alt_description" />
+      <div class="modal-content__details">
+        <h2>{{ modalData?.artist }}</h2>
+        <p>{{ modalData?.photo_location }}</p>
+      </div>
+    </div>
+  </AppModal>
+</template>
+
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import TheSearchBar from '@/components/TheSearchBar.vue'
@@ -5,23 +59,11 @@ import AppModal from '@/components/AppModal.vue'
 import SkeletonLoader from '@/components/SkeletonLoader.vue'
 import useImage from '@/composables/useImage'
 import ImageGrid from '@/components/ImageGrid.vue'
-import CloseCircle from '@/components/icons/CloseCircle.vue'
+import XMark from '@/components/icons/XMark.vue'
 import type { Image } from './types'
 
 const { fetchImages } = useImage()
 const imageList = ref<Image[]>([])
-
-const isModalOpen = ref(false)
-const modalData = ref<Image>()
-
-const openModal = (data: Image) => {
-  modalData.value = data
-  isModalOpen.value = true
-}
-
-const closeModal = () => {
-  isModalOpen.value = false
-}
 
 const isSearching = ref(false)
 const searchQuery = ref('')
@@ -51,57 +93,22 @@ const closeSearch = async () => {
   await loadImages()
 }
 
+const isModalOpen = ref(false)
+const modalData = ref<Image>()
+
+const openModal = (data: Image) => {
+  modalData.value = data
+  isModalOpen.value = true
+}
+
+const closeModal = () => {
+  isModalOpen.value = false
+}
+
 onMounted(async () => {
   await loadImages()
 })
 </script>
-
-<template>
-  <header>
-    <div class="header-container">
-      <div class="search-texts-container">
-        <p v-if="isSearching && searchQuery">
-          Searching for <span>"{{ `${searchQuery}` }}"</span>
-        </p>
-        <p v-else-if="!isSearching && searchQuery">
-          Search Results for <span>"{{ `${searchQuery}` }}"</span>
-        </p>
-        <div
-          v-if="!isSearchBarVisible && !isSearching"
-          @click="closeSearch"
-          style="display: inline-block; color: #0a2e65; width: 20px; height: 20px; cursor: pointer"
-        >
-          <CloseCircle />
-        </div>
-      </div>
-      <div class="search-bar-container">
-        <TheSearchBar v-if="isSearchBarVisible" @search="loadImages($event)" />
-      </div>
-    </div>
-  </header>
-
-  <main>
-    <SkeletonLoader v-if="isSearching" />
-    <div v-if="!isSearching && !imageList.length" class="empty-state">
-      <p>No images found. Please try a different search.</p>
-    </div>
-    <ImageGrid
-      v-if="imageList.length && !isSearching"
-      :image-list="imageList"
-      @open-modal="openModal($event)"
-    />
-  </main>
-
-  <AppModal :isOpen="isModalOpen" @close="closeModal">
-    <div class="modal-content">
-      <img :src="modalData?.image_regular_url" />
-      <div class="modal-content__details">
-        <h2>{{ modalData?.artist }}</h2>
-        <p>{{ modalData?.photo_location }}</p>
-      </div>
-    </div>
-  </AppModal>
-</template>
 
 <style scoped lang="scss">
 header {
@@ -154,11 +161,16 @@ main {
 }
 
 .modal-content {
+  min-height: 500px;
   height: 100%;
   &__details {
     padding: 20px 50px;
     h2 {
       font-weight: 800;
+      color: $dark-blue;
+    }
+    p {
+      color: gray;
     }
   }
 
@@ -167,6 +179,21 @@ main {
     height: 500px;
     object-fit: cover;
     border-radius: $base-radius $base-radius 0 0;
+  }
+
+  .blurhash-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+
+    canvas {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
   }
 }
 </style>

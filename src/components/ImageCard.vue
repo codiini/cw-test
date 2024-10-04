@@ -4,7 +4,7 @@
       <canvas ref="canvas"></canvas>
     </div>
     <img
-      :src="image_regular_url"
+      :src="image_preview_url"
       :alt="alt_description"
       @load="onImageLoad"
       :style="{ display: imageLoaded ? 'block' : 'none' }"
@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, defineProps } from 'vue'
-import { decode } from 'blurhash'
+import useImage from '@/composables/useImage'
 import type { Image } from '../types'
 
 type ImageProps = Omit<Image, 'image_regular_url | row_span'>
@@ -27,27 +27,18 @@ type ImageProps = Omit<Image, 'image_regular_url | row_span'>
 const props = defineProps<ImageProps>()
 
 const imageLoaded = ref(false)
+const blurhashContainer = ref<HTMLDivElement | null>(null)
+
 const canvas = ref<HTMLCanvasElement | null>(null)
 
 const onImageLoad = () => {
   imageLoaded.value = true
 }
 
-const blurhashContainer = ref<HTMLDivElement | null>(null)
-
+const { setBlurHash } = useImage()
 onMounted(() => {
   if (canvas.value && blurhashContainer.value) {
-    const containerWidth = blurhashContainer.value.offsetWidth
-    const containerHeight = blurhashContainer.value.offsetHeight
-
-    canvas.value.width = containerWidth
-    canvas.value.height = containerHeight
-
-    const pixels = decode(props.blur_hash, containerWidth, containerHeight)
-    const ctx = canvas.value.getContext('2d')
-    const imageData = ctx!.createImageData(containerWidth, containerHeight)
-    imageData.data.set(pixels)
-    ctx!.putImageData(imageData, 0, 0)
+    setBlurHash(canvas.value, props.blur_hash, blurhashContainer.value)
   }
 })
 </script>
