@@ -4,16 +4,7 @@
       <div v-if="isOpen" class="modal-overlay" @click="closeModal">
         <div class="modal-content" @click.stop>
           <button class="modal-close" @click="closeModal">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="size-6"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-            </svg>
+            <XMark />
           </button>
           <slot></slot>
         </div>
@@ -24,6 +15,7 @@
 
 <script setup lang="ts">
 import { defineProps, defineEmits } from 'vue'
+import XMark from './icons/XMark.vue'
 
 defineProps({
   isOpen: {
@@ -62,7 +54,7 @@ const closeModal = () => {
 .modal-content {
   background-color: white;
   border-radius: $base-radius;
-  max-width: 1200px;
+  max-width: 900px;
   width: 100%;
   max-height: 90%;
   @include position(relative);

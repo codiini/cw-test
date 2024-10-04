@@ -29,6 +29,7 @@ defineProps<{
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-row-gap: 30px;
   column-gap: 50px;
+  padding: 0 40px;
   @include position(relative, -75px);
 }
 </style>

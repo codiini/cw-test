@@ -22,8 +22,7 @@
   grid-row-gap: 30px;
   column-gap: 50px;
   @include position(relative, -75px);
-  position: relative;
-  top: -75px;
+  padding: 0 40px;
 }
 
 .skeleton-item {
