@@ -4,7 +4,7 @@
       <canvas ref="canvas"></canvas>
     </div>
     <img
-      :src="image_preview_url"
+      :src="image_url"
       :alt="alt_description"
       @load="onImageLoad"
       :style="{ display: imageLoaded ? 'block' : 'none' }"
@@ -22,7 +22,7 @@ import { ref, onMounted, defineProps } from 'vue'
 import useImage from '@/composables/useImage'
 import type { Image } from '../types'
 
-type ImageProps = Omit<Image, 'image_regular_url | row_span'>
+type ImageProps = Omit<Image, 'row_span'>
 
 const props = defineProps<ImageProps>()
 

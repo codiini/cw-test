@@ -43,7 +43,7 @@
 
   <AppModal :isOpen="isModalOpen" @close="closeModal">
     <div class="modal-content">
-      <img :src="modalData?.image_regular_url" :alt="modalData?.alt_description" />
+      <img :src="modalData?.image_url" :alt="modalData?.alt_description" />
       <div class="modal-content__details">
         <h2>{{ modalData?.artist }}</h2>
         <p>{{ modalData?.photo_location }}</p>

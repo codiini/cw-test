@@ -10,8 +10,7 @@ const useImage = () => {
 
     return result.data.map((image: any) => ({
       id: image.id,
-      image_preview_url: image.urls.regular,
-      image_regular_url: image.urls.full,
+      image_url: image.urls.full,
       alt_description: image.alt_description,
       artist: image.user.name,
       photo_location: image.user.location ?? 'N/A',
