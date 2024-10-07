@@ -8,6 +8,7 @@ For this test, I used the following tools:
 - Axios
 - SCSS
 - Vite
+- Typescript
 
 I was able to meet the requirements and also added some extras, such as:
 
